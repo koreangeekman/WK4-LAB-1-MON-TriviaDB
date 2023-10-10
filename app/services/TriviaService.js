@@ -11,12 +11,13 @@ async function _getCategories() {
     const response = await axios.get(`https://opentdb.com/api_category.php`)
     AppState.categories = response.data.trivia_categories.map(category => new Category(category))
     AppState.emit('categories');
+    console.log('get categs');
   } catch (error) {
     console.log(error);
   }
 }
 
-//https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple
+// example https://opentdb.com/api.php?amount=10&category=18&difficulty=medium&type=multiple
 async function _getQuestions() {
   try {
     const set = AppState.settings;
@@ -41,9 +42,8 @@ class TriviaService {
   async saveSettings(newSettings) {
     console.log('New Settings: ', newSettings);
     AppState.settings = newSettings;
-    AppState.emit('settings');
     _saveSettings();
-    await _getQuestions(); // pre-load Qs when settings change
+    // await _getQuestions(); // pre-load Qs when settings change
   }
   startGame() {
 

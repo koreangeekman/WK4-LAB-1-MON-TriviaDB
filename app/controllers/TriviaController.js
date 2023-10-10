@@ -11,6 +11,7 @@ function _drawCategoryList() {
   `;
   AppState.categories.forEach(c => contentHTML += c.categoryListEntry);
   setHTML('category', contentHTML);
+  // console.log('drawn cat list');
 }
 
 function _drawQuestion() {
@@ -35,20 +36,22 @@ function _preSetSettings() {
   document.getElementById('qQty').value = set.qty ? set.qty : 10;
 }
 
-async function _arrayLoader() {
-  await _drawCategoryList(); // load category list
-  _preSetSettings(); // then draw/set form values
-  triviaService.getQuestions(); //loads the questions from prior parameters
+async function _preLoader() {
+  try {
+    await triviaService.getCategories();
+    // _drawCategoryList(); // ^ load & draw category list
+    // _preSetSettings(); // then draw/set form values
+  } catch (error) {
+    console.log('on trivia controller page-load', error)
+  }
 }
 
 export class TriviaController {
   constructor() {
-    try {
-      triviaService.getCategories();
-    } catch (error) {
-      console.log('on trivia controller page-load', error)
-    }
-    AppState.on('categories', _arrayLoader);
+    _preLoader();
+    AppState.on('categories', _drawCategoryList);
+    AppState.on('categories', _preSetSettings);
+    AppState.on('settings', triviaService.getQuestions); //loads the questions from prior parameters
   }
 
   async saveSettings(event) {
