@@ -4,3 +4,45 @@ body {
   background-position: top;
   /* object-fit: cover; */
 }
+
+output {
+  font-size: 1.5rem;
+  width: 3rem;
+  text-align: center;
+}
+
+/* span {
+  margin: 0;
+  padding: 0;
+} */
+
+.blueBG {
+  background-color: #123456b0;
+}
+
+.title {
+  color: whitesmoke;
+  text-shadow: 0 0 5px black;
+}
+
+.question {
+  background-color: #12345678;
+  /* border: 3px solid whitesmoke; */
+  border-radius: 1rem;
+  padding: 1rem 3rem;
+  color: whitesmoke;
+}
+
+.answer {
+  background-color: #12345678;
+  /* border: 3px solid whitesmoke; */
+  border-radius: 1rem;
+  padding: 2rem 2rem;
+  line-height: 0;
+  width: 100%;
+  color: whitesmoke;
+}
+
+.opt {
+  color: orange;
+}
