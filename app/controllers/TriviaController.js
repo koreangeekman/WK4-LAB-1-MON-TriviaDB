@@ -1,5 +1,4 @@
 import { AppState } from "../AppState.js";
-import { Settings } from "../models/Settings.js";
 import { triviaService } from "../services/TriviaService.js";
 import { getFormData } from "../utils/FormHandler.js";
 import { Pop } from "../utils/Pop.js";
@@ -15,7 +14,9 @@ function _drawCategoryList() {
 }
 
 function _drawQuestion() {
-
+  let contentHTML = '';
+  contentHTML = AppState.questions[0].qaTemplate;
+  setHTML('router-view', contentHTML)
 }
 
 function _randomizeAnswerLocation() {
@@ -52,19 +53,20 @@ export class TriviaController {
     AppState.on('categories', _drawCategoryList);
     AppState.on('categories', _preSetSettings);
     AppState.on('settings', triviaService.getQuestions); //loads the questions from prior parameters
+    // AppState.on('questions', _drawQuestion);
   }
 
   async saveSettings(event) {
     try {
       event.preventDefault();
-      const set = new Settings(getFormData(event.target));
-      triviaService.saveSettings(set);
+      triviaService.saveSettings(getFormData(event.target));
     } catch (error) {
       console.log(error);
     }
   }
 
   startGame() { //default settings - any category, difficulty, type, 10 Qs
+    _drawQuestion();
     triviaService.startGame()
   }
 
